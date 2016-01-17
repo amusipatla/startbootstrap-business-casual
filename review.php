@@ -62,10 +62,10 @@
                         <a href="menu.html">Menu</a>
                     </li>
                     <li>
-                        <a href="review.html">Reviews</a>
+                        <a href="review.php">Reviews</a>
                     </li>
 					<li>
-                        <a href="reserve.html">Reservations</a>
+                        <a href="reserve.php">Reservations</a>
                     </li>
                 </ul>
             </div>
