@@ -33,22 +33,31 @@ function filterString($field){
 }
  
 // Define variables and initialize with empty values
-$nameErr = $emailErr = $messageErr = "";
-$name = $email = $subject = $message = "";
+$firstnameErr = $lastnameErr = $emailErr = $messageErr = "";
+$lastname =  $firstname = $email = $subject = $message = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
     // Validate user name
-    if(empty($_POST["name"])){
-        $nameErr = 'Please enter your name.';
+    if(empty($_POST["firstname"])){
+        $firstnameErr = 'Please enter your name.';
     }else{
-        $name = filterName($_POST["name"]);
-        if($name == FALSE){
-            $nameErr = 'Please enter a valid name.';
+        $firstname = filterName($_POST["firstname"]);
+        if($firstname == FALSE){
+            $firstnameErr = 'Please enter a valid name.';
         }
     }
     
+	if(empty($_POST["lastname"])){
+        $lastnameErr = 'Please enter your name.';
+    }else{
+        $name = filterName($_POST["lastname"]);
+        if($lastname == FALSE){
+            $lastnameErr = 'Please enter a valid name.';
+        }
+    }
+	
     // Validate email address
     if(empty($_POST["email"])){
         $emailErr = 'Please enter your email address.';     
@@ -57,20 +66,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if($email == FALSE){
             $emailErr = 'Please enter a valid email address.';
         }
-    }
-    
-    // Validate user comment
-    if(empty($_POST["message"])){
-        $messageErr = 'Please enter your comment.';     
-    }else{
-        $message = filterString($_POST["message"]);
-        if($message == FALSE){
-            $messageErr = 'Please enter a valid comment.';
-        }
-    }
+    }    
 	
 	$thanks='<html><body>';
-	$thanks.='<h1> Hi, ' . $_POST["name"] . '</h1>';
+	$thanks.='<h1> Hi, ' . $_POST["firstname"] . '</h1>';
 	$thanks.='<br> <h3> Thanks for signing up as a preferred member of Tech Treats!</h3>';
 	$thanks.='<br> <p>As a preferred member, you get certain benefits, like discounts on baked goods, and a free cupcake every month!</p>';
 	$thanks.='<p>We hope to see you soon!</p>';
@@ -223,24 +222,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <strong>Preferred Member</strong>
                     </h2>
                     <hr>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, vitae, distinctio, possimus repudiandae cupiditate ipsum excepturi dicta neque eaque voluptates tempora veniam esse earum sapiente optio deleniti consequuntur eos voluptatem.</p>
+                    <p>As a preferred member, you can get more benefits!</p>
 					<form action="reserve.php" method="post">
 						<div class="row">
-							<div class="form-ground col-lg-4">
-								<label for="inputName">Name:</label>
-								<input type="text" name="name" id="inputName" class="form-control" value="<?php echo $name; ?>">
-								<span class="error"><?php echo $nameErr; ?></span>
+							<div class="form-group col-lg-4">
+								<label for="inputFirstName">First name:</label>
+								<input type="text" name="firstname" id="inputFirstName" class="form-control" value="<?php echo $firstname; ?>">
+								<span class="error"><?php echo $firstnameErr; ?></span>
 							</div>
-							<div class="form-ground col-lg-4">
+							<div class="form-group col-lg-4">
+								<label for="inputLastName">Last name:</label>
+								<input type="text" name="lastname" id="inputLastName" class="form-control" value="<?php echo $lastname; ?>">
+								<span class="error"><?php echo $lastnameErr; ?></span>
+							</div>
+							<div class="form-group col-lg-4">
 								<label for="inputEmail">Email:</label>
 								<input type="text" name="email" id="inputEmail" class="form-control" value="<?php echo $email; ?>">
 								<span class="error"><?php echo $emailErr; ?></span>
 							</div>
-							<div class="form-ground col-lg-12">
-								<label for="inputComment">Message:</label>
-								<textarea class="form-control" name="message" id="inputComment" rows="6" <?php echo $message; ?>></textarea>
-								<span class="error"><?php echo $messageErr; ?></span>
-							</div>	
+							<div class="form-group col-lg-4">
+							</div>
 							<div class="form-group col-lg-12">
                                 <button type="submit" class="btn btn-default" value="Submit">Submit</button>
                             </div>
