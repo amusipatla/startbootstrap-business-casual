@@ -341,7 +341,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <strong>Reservation</strong>
                     </h2>
                     <hr>
-                    <p>Want to dine in? Making a reservation will guarantee we have a table for you!</p>
+                    <p>Want to dine in? Making a reservation will guarantee we have a table for you! Keep in mind we are only open Mondays to Thursdays at 10 am- 6pm. </p>
                     <form action="reserve.php" method="post">
 						<div class="row">
 							<div class="form-group col-lg-4">
@@ -361,23 +361,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 							</div>
 							<div class="form-group col-md-4">
 								<label for="inputDate">Date:</label>
-								<input type= "date" name="reservation-date" min="2016-01-17" max="2018-01-17" class="form-control">
+								<input type= "date" name="reservation-date" min=<?php echo date("Y-m-d") ?>  max= <?php echo date("Y-m-d", strtotime("+28 day", time())) ?> class="form-control" list = "dates">
+									<datalist id="dates">
+									  <?php
+										for($x = 1; $x <31; $x++){
+										  if (date("l", time()+($x*86400)) != "Sunday" && date("l", time()+($x*86400)) != "Saturday" && date("l", time()+($x*86400)) != "Friday") {
+											echo "<option>" . date("Y-m-d", time()+($x*86400) ) . "</option>";
+										  }
+										}
+
+									  ?>
+
+									</datalist>
 							</div>
 							<div class="form-group col-md-4">
 								<label for="inputTime">Time:</label>
-								<input type= "time" name="reservation-time" min=<?php echo date("Y-m-d") ?>  class="form-control" list = "dates">
-                <datalist id="dates">
-                  <?php
-                    for(int x = 1; x <31, x++){
-                      if (date("l") != "Sunday" && date("l") != "Saturday" && date("l") != "Friday") {
-                        echo "<option>" . date("m/j/Y", time()+(x*86400) ) . </option>;
-                      }
-                    }
-
-                  ?>
-
-                </datalist>
-
+								<input type= "time" name="reservation-time" min="10:00" max="16:00">
 							</div>
 							<div class="form-group col-lg-12">
                                 <button type="submit" name="reserve" class="btn btn-default" value="Submit">Submit</button>
