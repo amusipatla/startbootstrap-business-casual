@@ -57,7 +57,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		if(empty($_POST["lastname"])){
 			$lastnameErr = 'Please enter your name.';
 		}else{
-			$name = filterName($_POST["lastname"]);
+			$lastname = filterName($_POST["lastname"]);
 			if($lastname == FALSE){
 				$lastnameErr = 'Please enter a valid name.';
 			}
@@ -98,9 +98,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 		   // Sending email
 			if(mail($to, $subject, $thanks, $headers)){
-				echo '<p class="success">Your message has been sent successfully!</p>';
+				//echo '<p class="success">Your message has been sent successfully!</p>';
 			}else{
-				echo '<p class="error">Unable to send email. Please try again!</p>';
+				//echo '<p class="error">Unable to send email. Please try again!</p>';
 			}
 		}
 
@@ -273,10 +273,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			'X-Mailer: PHP/' . phpversion();
 
 		   // Sending email
+		   
 			if(mail($to, $subject, $thanks, $headers)){
-				echo '<p class="success">Your message has been sent successfully!</p>';
+				//echo '<p class="success">Your message has been sent successfully!</p>';
 			}else{
-				echo '<p class="error">Unable to send email. Please try again!</p>';
+			//	echo '<p class="error">Unable to send email. Please try again!</p>';
 			}
 		}
 
@@ -370,7 +371,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <strong>Reservation</strong>
                     </h2>
                     <hr>
-                    <p>Want to dine in? Making a reservation will guarantee we have a table for you! Keep in mind we are only open Mondays to Thursdays at 10 am- 6pm. </p>
+                    <p>Want to dine in? Making a reservation will guarantee we have a table for you! Keep in mind we are only open Mondays to Thursdays at 10 am-6 pm, and we close at 4 pm on Thursdays. </p>
                     <form action="reserve.php" method="post">
 						<div class="row">
 							<div class="form-group col-lg-4">
@@ -406,7 +407,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 							</div>
 							<div class="form-group col-md-4">
 								<label for="inputTime">Time:</label>
-								<input type= "time" name="reservation-time" min="10:00" max="18:00">
+								<input type= "time" name="reservation-time" min="10:00" max="18:00" class="form-control">
 								<span class="error"><?php echo $timeErr; ?></span>
 							</div>
 							<div class="form-group col-lg-12">
