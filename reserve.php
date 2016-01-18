@@ -3,18 +3,18 @@
 function filterName($field){
     // Sanitize user name
     $field = filter_var(trim($field), FILTER_SANITIZE_STRING);
-    
+
     // Validate user name
     if(filter_var($field, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+/")))){
         return $field;
     }else{
         return FALSE;
     }
-}    
+}
 function filterEmail($field){
     // Sanitize e-mail address
     $field = filter_var(trim($field), FILTER_SANITIZE_EMAIL);
-    
+
     // Validate e-mail address
     if(filter_var($field, FILTER_VALIDATE_EMAIL)){
         return $field;
@@ -31,18 +31,18 @@ function filterString($field){
         return FALSE;
     }
 }
- 
+
 // Define variables and initialize with empty values
 $firstnameErr = $lastnameErr = $emailErr = "";
 $lastname =  $firstname = $email = "";
 
 $firstname1Err = $lastname1Err = $email1Err = "";
 $lastname1 =  $firstname1 = $email1 = "";
- 
+
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
- 
-    
+
+
 	if(!empty($_POST['preferred'])){
 		// Validate user name
 		if(empty($_POST["firstname"])){
@@ -53,7 +53,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				$firstnameErr = 'Please enter a valid name.';
 			}
 		}
-		
+
 		if(empty($_POST["lastname"])){
 			$lastnameErr = 'Please enter your name.';
 		}else{
@@ -62,17 +62,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				$lastnameErr = 'Please enter a valid name.';
 			}
 		}
-		
+
 		// Validate email address
 		if(empty($_POST["email"])){
-			$emailErr = 'Please enter your email address.';     
+			$emailErr = 'Please enter your email address.';
 		}else{
 			$email = filterEmail($_POST["email"]);
 			if($email == FALSE){
 				$emailErr = 'Please enter a valid email address.';
 			}
-		}    
-		
+		}
+
 		$thanks='<html><body>';
 		$thanks.='<h1> Hi, ' . $_POST["firstname"] . '</h1>';
 		$thanks.='<br> <h3> Thanks for signing up as a preferred member of Tech Treats!</h3>';
@@ -80,22 +80,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$thanks.='<p>We hope to see you soon!</p>';
 		$thanks.='<br><br><h3>Your friends at Tech Treats Bakery</h3>';
 		$thanks.='</body></html>';
-		
+
 		$subject='Welcome to Tech Treats!';
-		
+
 		// Check input errors before sending email
 		if(empty($firstnameErr) && empty($emailErr) && empty($lastnameErr)){
 			// Recipient email address
 			$to =  $email;
-			
+
 			// Create email headers
-			
+
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type:text/html; charset=iso-8859-1' . "\r\n";
 			$headers .= 'From: '. $email . "\r\n" .
 			'Reply-To: '. $email . "\r\n" .
 			'X-Mailer: PHP/' . phpversion();
-			
+
 		   // Sending email
 			if(mail($to, $subject, $thanks, $headers)){
 				echo '<p class="success">Your message has been sent successfully!</p>';
@@ -103,9 +103,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				echo '<p class="error">Unable to send email. Please try again!</p>';
 			}
 		}
-		
+
 	}
-	
+
 	if(!empty($_POST['reserve'])){
 		// Validate user name
 		if(empty($_POST["firstname1"])){
@@ -116,7 +116,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				$firstname1Err = 'Please enter a valid name.';
 			}
 		}
-		
+
 		if(empty($_POST["lastname1"])){
 			$lastname1Err = 'Please enter your name.';
 		}else{
@@ -125,15 +125,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				$lastname1Err = 'Please enter a valid name.';
 			}
 		}
-		
+
 		// Validate email address
 		if(empty($_POST["email1"])){
-			$email1Err = 'Please enter your email address.';     
+			$email1Err = 'Please enter your email address.';
 		}else{
 			$email1 = filterEmail($_POST["email1"]);
 			if($email1 == FALSE){
 				$email1Err = 'Please enter a valid email address.';
 			}
+			
 		}    
 		
 		$temp= $_POST["reservation-date"];
@@ -218,8 +219,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				$time.=' PM';
 				break;
 		}
-		
-		
+
 		$thanks='<html><body>';
 		$thanks.='<h1> Hi, ' . $_POST["firstname1"] . '</h1>';
 		$thanks.='<br> <h3> Thanks for making a reservation at Tech Treats!</h3>';
@@ -227,22 +227,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$thanks.='<p>We hope to see you soon!</p>';
 		$thanks.='<br><br><h3>Your friends at Tech Treats Bakery</h3>';
 		$thanks.='</body></html>';
-		
+
 		$subject='Welcome to Tech Treats!';
-		
+
 		// Check input errors before sending email
 		if(empty($firstname1Err) && empty($email1Err) && empty($lastname1Err)){
 			// Recipient email address
 			$to =  $email1;
-			
+
 			// Create email headers
-			
+
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type:text/html; charset=iso-8859-1' . "\r\n";
 			$headers .= 'From: '. $email1 . "\r\n" .
 			'Reply-To: '. $email1 . "\r\n" .
 			'X-Mailer: PHP/' . phpversion();
-			
+
 		   // Sending email
 			if(mail($to, $subject, $thanks, $headers)){
 				echo '<p class="success">Your message has been sent successfully!</p>';
@@ -250,7 +250,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				echo '<p class="error">Unable to send email. Please try again!</p>';
 			}
 		}
-		
+
 	}
 }
 ?>
@@ -365,8 +365,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 							</div>
 							<div class="form-group col-md-4">
 								<label for="inputTime">Time:</label>
-								<input type= "time" name="reservation-time" min="10:00" max="16:00" class="form-control">
-								
+								<input type= "time" name="reservation-time" min=<?php echo date("Y-m-d") ?>  class="form-control" list = "dates">
+                <datalist id="dates">
+                  <?php
+                    for(int x = 1; x <31, x++){
+                      if (date("l") != "Sunday" && date("l") != "Saturday" && date("l") != "Friday") {
+                        echo "<option>" . date("m/j/Y", time()+(x*86400) ) . </option>;
+                      }
+                    }
+
+                  ?>
+
+                </datalist>
+
 							</div>
 							<div class="form-group col-lg-12">
                                 <button type="submit" name="reserve" class="btn btn-default" value="Submit">Submit</button>
