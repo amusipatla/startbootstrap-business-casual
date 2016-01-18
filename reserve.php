@@ -33,71 +33,143 @@ function filterString($field){
 }
  
 // Define variables and initialize with empty values
-$firstnameErr = $lastnameErr = $emailErr = $messageErr = "";
-$lastname =  $firstname = $email = $subject = $message = "";
+$firstnameErr = $lastnameErr = $emailErr = "";
+$lastname =  $firstname = $email = "";
+
+$firstname1Err = $lastname1Err = $email1Err = "";
+$lastname1 =  $firstname1 = $email1 = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
-    // Validate user name
-    if(empty($_POST["firstname"])){
-        $firstnameErr = 'Please enter your name.';
-    }else{
-        $firstname = filterName($_POST["firstname"]);
-        if($firstname == FALSE){
-            $firstnameErr = 'Please enter a valid name.';
-        }
-    }
     
-	if(empty($_POST["lastname"])){
-        $lastnameErr = 'Please enter your name.';
-    }else{
-        $name = filterName($_POST["lastname"]);
-        if($lastname == FALSE){
-            $lastnameErr = 'Please enter a valid name.';
-        }
-    }
-	
-    // Validate email address
-    if(empty($_POST["email"])){
-        $emailErr = 'Please enter your email address.';     
-    }else{
-        $email = filterEmail($_POST["email"]);
-        if($email == FALSE){
-            $emailErr = 'Please enter a valid email address.';
-        }
-    }    
-	
-	$thanks='<html><body>';
-	$thanks.='<h1> Hi, ' . $_POST["firstname"] . '</h1>';
-	$thanks.='<br> <h3> Thanks for signing up as a preferred member of Tech Treats!</h3>';
-	$thanks.='<br> <p>As a preferred member, you get certain benefits, like discounts on baked goods, and a free cupcake every month!</p>';
-	$thanks.='<p>We hope to see you soon!</p>';
-	$thanks.='<br><br><h3>Your friends at Tech Treats Bakery</h3>';
-	$thanks.='</body></html>';
-	
-	$subject='Welcome to Tech Treats!';
-
-    // Check input errors before sending email
-    if(empty($nameErr) && empty($emailErr) && empty($messageErr)){
-        // Recipient email address
-        $to =  $email;
-        
-        // Create email headers
+	if(!empty($_POST['preferred'])){
+		// Validate user name
+		if(empty($_POST["firstname"])){
+			$firstnameErr = 'Please enter your name.';
+		}else{
+			$firstname = filterName($_POST["firstname"]);
+			if($firstname == FALSE){
+				$firstnameErr = 'Please enter a valid name.';
+			}
+		}
 		
-        $headers = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type:text/html; charset=iso-8859-1' . "\r\n";
-		$headers .= 'From: '. $email . "\r\n" .
-        'Reply-To: '. $email . "\r\n" .
-        'X-Mailer: PHP/' . phpversion();
-        
-	   // Sending email
-        if(mail($to, $subject, $thanks, $headers)){
-            echo '<p class="success">Your message has been sent successfully!</p>';
-        }else{
-            echo '<p class="error">Unable to send email. Please try again!</p>';
-        }
-    }
+		if(empty($_POST["lastname"])){
+			$lastnameErr = 'Please enter your name.';
+		}else{
+			$name = filterName($_POST["lastname"]);
+			if($lastname == FALSE){
+				$lastnameErr = 'Please enter a valid name.';
+			}
+		}
+		
+		// Validate email address
+		if(empty($_POST["email"])){
+			$emailErr = 'Please enter your email address.';     
+		}else{
+			$email = filterEmail($_POST["email"]);
+			if($email == FALSE){
+				$emailErr = 'Please enter a valid email address.';
+			}
+		}    
+		
+		$thanks='<html><body>';
+		$thanks.='<h1> Hi, ' . $_POST["firstname"] . '</h1>';
+		$thanks.='<br> <h3> Thanks for signing up as a preferred member of Tech Treats!</h3>';
+		$thanks.='<br> <p>As a preferred member, you get certain benefits, like discounts on baked goods, and a free cupcake every month!</p>';
+		$thanks.='<p>We hope to see you soon!</p>';
+		$thanks.='<br><br><h3>Your friends at Tech Treats Bakery</h3>';
+		$thanks.='</body></html>';
+		
+		$subject='Welcome to Tech Treats!';
+		
+		// Check input errors before sending email
+		if(empty($firstnameErr) && empty($emailErr) && empty($lastnameErr)){
+			// Recipient email address
+			$to =  $email;
+			
+			// Create email headers
+			
+			$headers = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type:text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From: '. $email . "\r\n" .
+			'Reply-To: '. $email . "\r\n" .
+			'X-Mailer: PHP/' . phpversion();
+			
+		   // Sending email
+			if(mail($to, $subject, $thanks, $headers)){
+				echo '<p class="success">Your message has been sent successfully!</p>';
+			}else{
+				echo '<p class="error">Unable to send email. Please try again!</p>';
+			}
+		}
+		
+	}
+	
+	if(!empty($_POST['reserve'])){
+		// Validate user name
+		if(empty($_POST["firstname1"])){
+			$firstname1Err = 'Please enter your name.';
+		}else{
+			$firstname1 = filterName($_POST["firstname1"]);
+			if($firstname1 == FALSE){
+				$firstname1Err = 'Please enter a valid name.';
+			}
+		}
+		
+		if(empty($_POST["lastname1"])){
+			$lastname1Err = 'Please enter your name.';
+		}else{
+			$lastname1 = filterName($_POST["lastname1"]);
+			if($lastname1 == FALSE){
+				$lastname1Err = 'Please enter a valid name.';
+			}
+		}
+		
+		// Validate email address
+		if(empty($_POST["email1"])){
+			$email1Err = 'Please enter your email address.';     
+		}else{
+			$email1 = filterEmail($_POST["email1"]);
+			if($email1 == FALSE){
+				$email1Err = 'Please enter a valid email address.';
+			}
+		}    
+		
+		
+		
+		$thanks='<html><body>';
+		$thanks.='<h1> Hi, ' . $_POST["firstname1"] . '</h1>';
+		$thanks.='<br> <h3> Thanks for making a reservation at Tech Treats!</h3>';
+		$thanks.='<br> <p> Your reservation is on ' . $_POST["reservation-date"] . ' at ' . $_POST["reservation-time"] . '.</p>';
+		$thanks.='<p>We hope to see you soon!</p>';
+		$thanks.='<br><br><h3>Your friends at Tech Treats Bakery</h3>';
+		$thanks.='</body></html>';
+		
+		$subject='Welcome to Tech Treats!';
+		
+		// Check input errors before sending email
+		if(empty($firstname1Err) && empty($email1Err) && empty($lastname1Err)){
+			// Recipient email address
+			$to =  $email1;
+			
+			// Create email headers
+			
+			$headers = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type:text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From: '. $email1 . "\r\n" .
+			'Reply-To: '. $email1 . "\r\n" .
+			'X-Mailer: PHP/' . phpversion();
+			
+		   // Sending email
+			if(mail($to, $subject, $thanks, $headers)){
+				echo '<p class="success">Your message has been sent successfully!</p>';
+			}else{
+				echo '<p class="error">Unable to send email. Please try again!</p>';
+			}
+		}
+		
+	}
 }
 ?>
 
@@ -187,32 +259,38 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <strong>Reservation</strong>
                     </h2>
                     <hr>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, vitae, distinctio, possimus repudiandae cupiditate ipsum excepturi dicta neque eaque voluptates tempora veniam esse earum sapiente optio deleniti consequuntur eos voluptatem.</p>
-                    <form role="form">
-                        <div class="row">
-                            <div class="form-group col-lg-4">
-                                <label>Name</label>
-                                <input type="text" class="form-control">
+                    <p>Want to dine in? Making a reservation will guarantee we have a table for you!</p>
+                    <form action="reserve.php" method="post">
+						<div class="row">
+							<div class="form-group col-lg-4">
+								<label for="inputFirstName1">First name:</label>
+								<input type="text" name="firstname1" id="inputFirstName1" class="form-control" value="<?php echo $firstname1; ?>">
+								<span class="error"><?php echo $firstname1Err; ?></span>
+							</div>
+							<div class="form-group col-lg-4">
+								<label for="inputLastName1">Last name:</label>
+								<input type="text" name="lastname1" id="inputLastName1" class="form-control" value="<?php echo $lastname1; ?>">
+								<span class="error"><?php echo $lastname1Err; ?></span>
+							</div>
+							<div class="form-group col-lg-4">
+								<label for="inputEmail1">Email:</label>
+								<input type="email" name="email1" id="inputEmail1" class="form-control" value="<?php echo $email1; ?>">
+								<span class="error"><?php echo $email1Err; ?></span>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="inputDate">Date:</label>
+								<input type= "date" name="reservation-date" min="2016-01-17" max="2018-01-17" class="form-control">
+							</div>
+							<div class="form-group col-md-4">
+								<label for="inputTime">Time:</label>
+								<input type= "time" name="reservation-time" min="10:00" max="16:00" class="form-control">
+								
+							</div>
+							<div class="form-group col-lg-12">
+                                <button type="submit" name="reserve" class="btn btn-default" value="Submit">Submit</button>
                             </div>
-                            <div class="form-group col-lg-4">
-                                <label>Email Address</label>
-                                <input type="email" class="form-control">
-                            </div>
-                            <div class="form-group col-lg-4">
-                                <label>Phone Number</label>
-                                <input type="tel" class="form-control">
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="form-group col-lg-12">
-                                <label>Message</label>
-                                <textarea class="form-control" rows="6"></textarea>
-                            </div>
-                            <div class="form-group col-lg-12">
-                                <input type="hidden" name="save" value="contact">
-                                <button type="submit" class="btn btn-default">Submit</button>
-                            </div>
-                        </div>
-                    </form>
+						</div>
+					</form>
 				</div>
 			</div>
             <div class="col-lg-6">
@@ -237,13 +315,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 							</div>
 							<div class="form-group col-lg-4">
 								<label for="inputEmail">Email:</label>
-								<input type="text" name="email" id="inputEmail" class="form-control" value="<?php echo $email; ?>">
+								<input type="email" name="email" id="inputEmail" class="form-control" value="<?php echo $email; ?>">
 								<span class="error"><?php echo $emailErr; ?></span>
 							</div>
-							<div class="form-group col-lg-4">
-							</div>
 							<div class="form-group col-lg-12">
-                                <button type="submit" class="btn btn-default" value="Submit">Submit</button>
+                                <button type="submit" name="preferred" class="btn btn-default" value="Submit">Submit</button>
                             </div>
 						</div>
 					</form>
