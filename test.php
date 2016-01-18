@@ -1,25 +1,23 @@
 <?php
- require_once ("class.phpmailer.php");
- $Correo = new PHPMailer();
- $Correo->IsSMTP();
- $Correo->SMTPAuth = true;
- $Correo->SMTPSecure = "tls";
- $Correo->Host = "smtp.gmail.com";
- $Correo->Port = 587;
- $Correo->Username = "techtreatsbakery@gmail.com";
- $Correo->Password = "techtreat";
- $Correo->SetFrom('techtreatsbakery@gmail.com','De Yo');
- $Correo->FromName = "From";
- $Correo->AddAddress("abdullah.shareef@gmail.com");
- $Correo->Subject = "Prueba con PHPMailer";
- $Correo->Body = "<H3>Bienvenido! Esto Funciona!</H3>";
- $Correo->IsHTML (true);
- if (!$Correo->Send())
- {
-   echo "Error: $Correo->ErrorInfo";
- }
- else
- {
-   echo "Message Sent!";
- }
+ require_once ("PHPMailerAutoload.php");
+ $mail = new PHPMailer(); // create a new object
+ $mail->IsSMTP(); // enable SMTP
+ $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+ $mail->SMTPAuth = true; // authentication enabled
+ $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+ $mail->Host = "smtp.gmail.com";
+ $mail->Port = 465; // or 587
+ $mail->IsHTML(true);
+ $mail->Username = "techtreatsbakery@gmail.com";
+ $mail->Password = "techtreat";
+ $mail->SetFrom("example@gmail.com");
+ $mail->Subject = "Test";
+ $mail->Body = "hello";
+ $mail->AddAddress("ab@gmail.com");
+
+  if(!$mail->Send()) {
+     echo "Mailer Error: " . $mail->ErrorInfo;
+  } else {
+     echo "Message has been sent";
+  }
 ?>

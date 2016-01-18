@@ -272,12 +272,33 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			'Reply-To: '. $email1 . "\r\n" .
 			'X-Mailer: PHP/' . phpversion();
 
+      require_once ("PHPMailerAutoload.php");
+      $mail = new PHPMailer(); // create a new object
+      $mail->IsSMTP(); // enable SMTP
+      $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+      $mail->SMTPAuth = true; // authentication enabled
+      $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+      $mail->Host = "smtp.gmail.com";
+      $mail->Port = 465; // or 587
+      $mail->IsHTML(true);
+      $mail->Username = "techtreatsbakery@gmail.com";
+      $mail->Password = "techtreat";
+      $mail->SetFrom("Tech Treats Bakery");
+      $mail->Subject = $subject;
+      $mail->Body = $thanks;
+      $mail->AddAddress($to);
+
+       if(!$mail->Send()) {
+          echo "Mailer Error: " . $mail->ErrorInfo;
+       } else {
+          echo "Message has been sent";
+       }
 		   // Sending email
-			if(mail($to, $subject, $thanks, $headers)){
-				echo '<p class="success">Your message has been sent successfully!</p>';
-			}else{
-				echo '<p class="error">Unable to send email. Please try again!</p>';
-			}
+			// if(mail($to, $subject, $thanks, $headers)){
+			// 	echo '<p class="success">Your message has been sent successfully!</p>';
+			// }else{
+			// 	echo '<p class="error">Unable to send email. Please try again!</p>';
+			// }
 		}
 
 	}
