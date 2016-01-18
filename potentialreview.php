@@ -45,18 +45,21 @@ and message)-->
 		//}
 		
 		
-			$firstname= mysqli_real_escape_string($link, $_POST['firstname']);
-			$firstname.=' ';
-			$lastname= mysqli_real_escape_string($link, $_POST['lastname']);
-			$comment= mysqli_real_escape_string($link, $_POST['comment']);
-			
-			$sql= "INSERT INTO comments (first_name, last_name, comment) VALUES ('$firstname', '$lastname', '$comment')";
-			if(mysqli_query($link, $sql)){
-				echo "Records added successfully";
-			}
-			else{
-				echo "ERROR: could not execute $sql" .
-				mysqli_error($link);
+			if(!empty($_POST['submit'])){
+				echo 'hello';
+				$firstname= mysqli_real_escape_string($link, $_POST['firstname']);
+				$firstname.=' ';
+				$lastname= mysqli_real_escape_string($link, $_POST['lastname']);
+				$comment= mysqli_real_escape_string($link, $_POST['comment']);
+				
+				$sql= "INSERT INTO comments (first_name, last_name, comment) VALUES ('$firstname', '$lastname', '$comment')";
+				if(mysqli_query($link, $sql)){
+					echo "Records added successfully";
+				}
+				else{
+					echo "ERROR: could not execute $sql" .
+					mysqli_error($link);
+				}
 			}
 		
 		mysqli_close($link);
@@ -123,18 +126,18 @@ and message)-->
 						<div class="row">
 							<div class="form-group col-lg-4">
 								<label for="inputFirstName">First name:</label>
-								<input type="text" name="firstname" id="inputFirstName" class="form-control">
+								<input type="text" name="firstname" id="inputFirstName" class="form-control" value="">
 							</div>
 							<div class="form-group col-lg-4">
 								<label for="inputLastName">Last name:</label>
-								<input type="text" name="lastname" id="inputLastName" class="form-control" >
+								<input type="text" name="lastname" id="inputLastName" class="form-control" value="">
 							</div>
 							<div class="form-group col-lg-8">
 								<label for="inputComment">Comment:</label>
 								<textarea rows="5" name="comment" id="inputComment" class="form-control" ></textarea>
 							</div>
 							<div class="form-group col-lg-12">
-                                <button type="submit" name="submit" class="btn btn-default" value="Submit">Submit</button>
+                                <button type="submit" name="submit" class="btn btn-default" value="submit">Submit</button>
                             </div>
 						</div>
 					</form>
