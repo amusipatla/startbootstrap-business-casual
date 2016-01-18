@@ -36,8 +36,8 @@ function filterString($field){
 $firstnameErr = $lastnameErr = $emailErr = "";
 $lastname =  $firstname = $email = "";
 
-$firstname1Err = $lastname1Err = $email1Err = "";
-$lastname1 =  $firstname1 = $email1 = "";
+$firstname1Err = $lastname1Err = $email1Err = $dateErr = $timeErr = "";
+$lastname1 =  $firstname1 = $email1 = $date = $time = "";
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -138,6 +138,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		}    
 		
 		$temp= $_POST["reservation-date"];
+		$tempday= strtotime($temp);
+		
+		$day= date("w", $tempday);
+		echo $day;
+		if(empty($temp)){
+			$dateErr= 'Please choose a date.';
+		}
+		if($day== 0 or $day== 5 or $day== 6){
+			$dateErr= 'We are not open that day.';
+		}
+		
 		switch(substr($temp, 5, 2)){
 			case "01":
 				$date= "January ";
@@ -182,6 +193,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$date .= substr($temp, 0, 4);
 		
 		$temp = $_POST['reservation-time'];
+		if(empty($temp)){
+			$timeErr= 'Please choose a time.';
+		}
+		
+		if((substr($temp,0,2)== 17 or substr($temp, 0, 2)== 18) && $day== 4){
+			$timeErr= 'We are not open that late on Thursdays.';
+		}
+		
 		switch(substr($temp, 0, 2)){
 			case "10":
 				$time='10';
@@ -218,6 +237,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				$time.=substr($temp, 2);
 				$time.=' PM';
 				break;
+			case "17":
+				$time='5';
+				$time.=substr($temp, 2);
+				$time.=' PM';
+				break;
+			case "18":
+				$time='6';
+				$time.=substr($temp, 2);
+				$time.=' PM';
+				break;
 		}
 
 		$thanks='<html><body>';
@@ -231,7 +260,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$subject='Welcome to Tech Treats!';
 
 		// Check input errors before sending email
-		if(empty($firstname1Err) && empty($email1Err) && empty($lastname1Err)){
+		if(empty($firstname1Err) && empty($email1Err) && empty($lastname1Err) && empty($dateErr) && empty($timeErr)){
 			// Recipient email address
 			$to =  $email1;
 
@@ -362,9 +391,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 							<div class="form-group col-md-4">
 								<label for="inputDate">Date:</label>
 								<input type= "date" name="reservation-date" min=<?php echo date("Y-m-d") ?>  max= <?php echo date("Y-m-d", strtotime("+28 day", time())) ?> class="form-control" list = "dates">
+								<span class="error"><?php echo $dateErr; ?></span>
 									<datalist id="dates">
 									  <?php
-										for($x = 1; $x <31; $x++){
+										for($x = 0; $x <28; $x++){
 										  if (date("l", time()+($x*86400)) != "Sunday" && date("l", time()+($x*86400)) != "Saturday" && date("l", time()+($x*86400)) != "Friday") {
 											echo "<option>" . date("Y-m-d", time()+($x*86400) ) . "</option>";
 										  }
@@ -376,7 +406,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 							</div>
 							<div class="form-group col-md-4">
 								<label for="inputTime">Time:</label>
-								<input type= "time" name="reservation-time" min="10:00" max="16:00">
+								<input type= "time" name="reservation-time" min="10:00" max="18:00">
+								<span class="error"><?php echo $timeErr; ?></span>
 							</div>
 							<div class="form-group col-lg-12">
                                 <button type="submit" name="reserve" class="btn btn-default" value="Submit">Submit</button>
