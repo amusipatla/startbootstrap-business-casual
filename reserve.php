@@ -136,12 +136,94 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			}
 		}    
 		
+		$temp= $_POST["reservation-date"];
+		switch(substr($temp, 5, 2)){
+			case "01":
+				$date= "January ";
+				break;
+			case "02":
+				$date= "February ";
+				break;
+			case "03":
+				$date= "March ";
+				break;
+			case "04":
+				$date= "April ";
+				break;
+			case "05":
+				$date= "May ";
+				break;
+			case "06":
+				$date= "June ";
+				break;
+			case "07":
+				$date= "July ";
+				break;
+			case "08":
+				$date= "August ";
+				break;
+			case "09":
+				$date= "September ";
+				break;
+			case "10":
+				$date= "October ";
+				break;
+			case "11":
+				$date= "November ";
+				break;
+			case "12":
+				$date= "December ";
+				break;
+		}
+		
+		$date .= substr($temp, 8);
+		$date .= ', ';
+		$date .= substr($temp, 0, 4);
+		
+		$temp = $_POST['reservation-time'];
+		switch(substr($temp, 0, 2)){
+			case "10":
+				$time='10';
+				$time.=substr($temp, 2);
+				$time.=' AM';
+				break;
+			case "11":
+				$time='11';
+				$time.=substr($temp, 2);
+				$time.=' AM';
+				break;
+			case "12":
+				$time='12';
+				$time.=substr($temp, 2);
+				$time.=' PM';
+				break;
+			case "13":
+				$time='1';
+				$time.=substr($temp, 2);
+				$time.=' PM';
+				break;
+			case "14":
+				$time='2';
+				$time.=substr($temp, 2);
+				$time.=' PM';
+				break;
+			case "15":
+				$time='3';
+				$time.=substr($temp, 2);
+				$time.=' PM';
+				break;
+			case "16":
+				$time='4';
+				$time.=substr($temp, 2);
+				$time.=' PM';
+				break;
+		}
 		
 		
 		$thanks='<html><body>';
 		$thanks.='<h1> Hi, ' . $_POST["firstname1"] . '</h1>';
 		$thanks.='<br> <h3> Thanks for making a reservation at Tech Treats!</h3>';
-		$thanks.='<br> <p> Your reservation is on ' . $_POST["reservation-date"] . ' at ' . $_POST["reservation-time"] . '.</p>';
+		$thanks.='<br> <p> Your reservation is on ' . $date . ' at ' . $time . '.</p>';
 		$thanks.='<p>We hope to see you soon!</p>';
 		$thanks.='<br><br><h3>Your friends at Tech Treats Bakery</h3>';
 		$thanks.='</body></html>';
