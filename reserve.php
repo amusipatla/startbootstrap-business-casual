@@ -288,7 +288,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                   <?php
                     for(int x = 1; x <31, x++){
                       if (date("l") != "Sunday" && date("l") != "Saturday" && date("l") != "Friday") {
-                        echo "<option>" . date("m/j/Y", time()+(x*86400) ) . </option>
+                        echo "<option>" . date("m/j/Y", time()+(x*86400) ) . </option>;
                       }
                     }
 
