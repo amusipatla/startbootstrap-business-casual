@@ -283,7 +283,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 							</div>
 							<div class="form-group col-md-4">
 								<label for="inputTime">Time:</label>
-								<input type= "time" name="reservation-time" min=<?php echo date(1) ?>  class="form-control" list = "dates">
+								<input type= "time" name="reservation-time" min=<?php echo date("Y-m-d") ?>  class="form-control" list = "dates">
                 <datalist id="dates">
                   <?php
                     for(int x = 1; x <31, x++){
