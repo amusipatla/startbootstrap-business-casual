@@ -141,7 +141,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$tempday= strtotime($temp);
 
 		$day= date("w", $tempday);
-		echo $day;
+
 		if(empty($temp)){
 			$dateErr= 'Please choose a date.';
 		}
@@ -275,7 +275,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       require_once ("PHPMailerAutoload.php");
       $mail = new PHPMailer(); // create a new object
       $mail->IsSMTP(); // enable SMTP
-      $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+      $mail->SMTPDebug =0; // debugging: 1 = errors and messages, 2 = messages only
       $mail->SMTPAuth = true; // authentication enabled
       $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
       $mail->Host = "smtp.gmail.com";
@@ -283,7 +283,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       $mail->IsHTML(true);
       $mail->Username = "techtreatsbakery@gmail.com";
       $mail->Password = "techtreat";
-      $mail->SetFrom("Tech Treats Bakery");
+      $mail->SetFrom("techtreatsbakery@gmail.com");
       $mail->Subject = $subject;
       $mail->Body = $thanks;
       $mail->AddAddress($to);
@@ -291,7 +291,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
        if(!$mail->Send()) {
           echo "Mailer Error: " . $mail->ErrorInfo;
        } else {
-          echo "Message has been sent";
+
        }
 		   // Sending email
 			// if(mail($to, $subject, $thanks, $headers)){
@@ -427,7 +427,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 							</div>
 							<div class="form-group col-md-4">
 								<label for="inputTime">Time:</label>
-								<input type= "time" name="reservation-time" min="10:00" max="18:00">
+								<input type= "time" name="reservation-time" min="10:00" max="18:00" class="form-control">
 								<span class="error"><?php echo $timeErr; ?></span>
 							</div>
 							<div class="form-group col-lg-12">
@@ -483,7 +483,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                     <!--End mc_embed_signup-->
 
-					<form action="reserve.php" method="post">
+					<!-- <form action="reserve.php" method="post">
 						<div class="row">
 							<div class="form-group col-lg-4">
 								<label for="inputFirstName">First name:</label>
@@ -504,7 +504,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 <button type="submit" name="preferred" class="btn btn-default" value="Submit">Submit</button>
                             </div>
 						</div>
-					</form>
+					</form> -->
                 </div>
             </div>
         </div>
